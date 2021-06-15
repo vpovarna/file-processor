@@ -18,4 +18,9 @@ public interface TextFileRepository {
 
   Set<String> getFilesByIp(String key, long startIndex, long endIndex);
 
+  Long addTaskIdToList(String key, String value);
+
+  String getFirstInsertedTask(String key);
+
+  Long getQueueSize(String key);
 }

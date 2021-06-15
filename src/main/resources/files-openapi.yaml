@@ -8,14 +8,14 @@ tags:
 servers:
   - url: /v1
 paths:
-  /files/{fileId}:
+  /files/{taskId}:
     get:
       summary: Get information about a specific file by id
       operationId: getFileById
       tags:
         - "files"
       parameters:
-        - name: fileId
+        - name: taskId
           in: path
           required: true
           description: The id of a text file
@@ -40,7 +40,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-  /files/{ipAddress}:
+  /files/ip/{ipAddress}:
     get:
       summary: Search for a file that contains a particular IP address
       operationId: getFileByIpAddress
@@ -85,7 +85,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/TextFile"
+              $ref: "#/components/schemas/NewFile"
         required: true
       responses:
         '201':
@@ -104,6 +104,11 @@ paths:
 
 components:
   schemas:
+    NewFile:
+      type: object
+      properties:
+        fileId:
+          type: string
     TextFile:
       type: object
       properties:

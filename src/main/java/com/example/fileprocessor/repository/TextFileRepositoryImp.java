@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,10 +70,40 @@ public class TextFileRepositoryImp implements TextFileRepository{
   @Override
   public Set<String> getFilesByIp(String keyName, long startIndex, long endIndex) {
     try (Jedis jedis = jedisPool.getResource()) {
-      return jedis.zrange(keyName, startIndex, startIndex);
+      return jedis.zrange(keyName, startIndex, endIndex);
     } catch (Exception e) {
       logger.error("Error fetching key: {} values. Exception: {}", keyName, e.toString());
       return Collections.emptySet();
+    }
+  }
+
+  @Override
+  public Long addTaskIdToList(String keyName, String value) {
+    try (Jedis jedis = jedisPool.getResource()) {
+      return jedis.lpush(keyName, value);
+    } catch (Exception e) {
+      logger.error("Error adding value to key: {} values. Exception: {}", keyName, e.toString());
+      return -1L;
+    }
+  }
+
+  @Override
+  public String getFirstInsertedTask(String keyName) {
+    try (Jedis jedis = jedisPool.getResource()) {
+      return jedis.rpop(keyName);
+    } catch (Exception e) {
+      logger.error("Error fetching values from key: {} values. Exception: {}", keyName, e.toString());
+      return StringUtils.EMPTY;
+    }
+  }
+
+  @Override
+  public Long getQueueSize(String keyName) {
+    try (Jedis jedis = jedisPool.getResource()) {
+      return jedis.llen(keyName);
+    } catch (Exception e) {
+      logger.error("Error getting the queue: {} size. Exception: {}", keyName, e.toString());
+      return -1L;
     }
   }
 }

@@ -1,2 +1,6 @@
 server:
   port: 18081
+
+queue:
+  process:
+    delay: 1000

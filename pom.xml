@@ -93,7 +93,9 @@
               <modelPackage>com.example.fileprocessor.model</modelPackage>
               <supportingFilesToGenerate>ApiUtil.java</supportingFilesToGenerate>
               <configOptions>
-                <interfacePattern>true</interfacePattern>
+                <sourceFolder>src/main/java/</sourceFolder>
+                <delegatePattern>true</delegatePattern>
+                <interfaceOnly>true</interfaceOnly>
               </configOptions>
             </configuration>
           </execution>
