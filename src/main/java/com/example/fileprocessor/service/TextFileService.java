@@ -54,8 +54,10 @@ public class TextFileService {
   }
 
   public Optional<TextFile> getFile(String  taskId) {
-    final Map<String, String> textFileHash = textFileRepository.getFile(buildHashKey(taskId));
+    final String keyName = buildHashKey(taskId);
+    final Map<String, String> textFileHash = textFileRepository.getFile(keyName);
     if (textFileHash.isEmpty()) {
+      logger.info("No file found in the repository with keyName: {}", keyName);
       return Optional.empty();
     }
     return Optional.of(buildTextFileFromHashValue(textFileHash));
