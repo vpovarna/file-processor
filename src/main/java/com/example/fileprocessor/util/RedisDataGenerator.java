@@ -10,7 +10,7 @@ import com.example.fileprocessor.model.TextFile;
 /**
  * @author Adobe Systems Incorporated.
  */
-public class RedisHMapGenerator {
+public class RedisDataGenerator {
 
   private static final String STATUS_CODE = "StatusCode";
   private static final String CREATED_AT = "CreatedAt";
@@ -22,8 +22,10 @@ public class RedisHMapGenerator {
   private static final String TEXT_FILES = "TEXT_FILES";
   private static final String QUEUE_NAME = "QUEUE";
   private static final String LIST_SEPARATOR = ",";
+  private static final String LIST = "LIST";
+  private static final String IP = "IP";
 
-  private RedisHMapGenerator() {
+  private RedisDataGenerator() {
   }
 
   public static Map<String, String> buildHashValue(TextFile textFile) {
@@ -65,5 +67,9 @@ public class RedisHMapGenerator {
 
   public static String getTaskIdsQueueName() {
     return TEXT_FILES + SEPARATOR + QUEUE_NAME;
+  }
+
+  public static String buildIpSetKey(String ip) {
+    return IP + SEPARATOR + ip + SEPARATOR + LIST;
   }
 }
