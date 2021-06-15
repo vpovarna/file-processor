@@ -1,5 +1,6 @@
 package com.example.fileprocessor.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.fileprocessor.api.FilesApi;
 import com.example.fileprocessor.model.NewFile;
 import com.example.fileprocessor.model.TextFile;
-import com.example.fileprocessor.service.TextFileService;
+import com.example.fileprocessor.service.TextFileOperationService;
 import com.example.fileprocessor.util.TextFileGenerator;
 
 /**
@@ -19,12 +20,12 @@ import com.example.fileprocessor.util.TextFileGenerator;
 @RestController
 public class TextFileProcessorController implements FilesApi {
 
-  private final TextFileService textFileService;
+  private final TextFileOperationService textFileService;
   private final TextFileGenerator taskFileGenerator;
 
   @Autowired
   public TextFileProcessorController(
-    TextFileService textFileService,
+    TextFileOperationService textFileService,
     TextFileGenerator taskFileGenerator) {
     this.textFileService = textFileService;
     this.taskFileGenerator = taskFileGenerator;
@@ -48,6 +49,12 @@ public class TextFileProcessorController implements FilesApi {
     final Optional<TextFile> file = textFileService.getFile(taskId);
 
     return file.map(ResponseEntity::ok).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+  }
+
+  @Override
+  public ResponseEntity<List<TextFile>> getFileByIpAddress(String ipAddress) {
+    final Optional<List<TextFile>> files = textFileService.getFiles(ipAddress);
+    return files.map(ResponseEntity::ok).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
   }
 
 }

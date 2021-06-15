@@ -23,13 +23,14 @@ public class TextFileGenerator implements Function<NewFile, TextFile> {
 
   @Override
   public TextFile apply(NewFile newFile) {
+    final LocalDate dtNow = LocalDate.now();
 
     final TextFile textFile = new TextFile();
     textFile.setFileId(newFile.getFileId());
     textFile.setIps(arrays);
     textFile.setTaskStatus(CREATED);
     textFile.setTaskId(UUID.randomUUID().toString());
-    textFile.setTaskCreationDate(LocalDate.now());
+    textFile.setTaskCreationDate(dtNow);
 
     return textFile;
   }
