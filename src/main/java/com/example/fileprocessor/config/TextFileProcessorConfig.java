@@ -11,7 +11,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
  * @author Adobe Systems Incorporated.
  */
 @Configuration
-public class FileProcessorConfig {
+public class TextFileProcessorConfig {
 
   @Bean
   public ObjectMapper objectMapper() {
